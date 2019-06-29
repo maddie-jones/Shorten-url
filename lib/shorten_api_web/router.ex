@@ -7,5 +7,6 @@ defmodule ShortenApiWeb.Router do
 
   scope "/api", ShortenApiWeb do
     pipe_through :api
+    resources "/links", LinkController
   end
 end

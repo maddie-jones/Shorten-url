@@ -2,8 +2,6 @@ use Mix.Config
 
 # Configure your database
 config :shorten_api, ShortenApi.Repo,
-  username: "postgres",
-  password: "postgres",
   database: "shorten_api_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
