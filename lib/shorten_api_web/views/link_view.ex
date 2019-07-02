@@ -11,8 +11,6 @@ defmodule ShortenApiWeb.LinkView do
   end
 
   def render("link.json", %{link: link}) do
-    %{id: link.id,
-      hash: link.hash,
-      url: link.url}
+    %{id: link.id, hash: link.hash, uri: link.uri |> URI.to_string()}
   end
 end

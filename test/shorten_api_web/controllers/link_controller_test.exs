@@ -6,13 +6,13 @@ defmodule ShortenApiWeb.LinkControllerTest do
 
   @create_attrs %{
     hash: "some hash",
-    url: "some url"
+    uri: "http://example.com/foo?thing=bar"
   }
   @update_attrs %{
     hash: "some updated hash",
-    url: "some updated url"
+    uri: "some updated uri"
   }
-  @invalid_attrs %{hash: nil, url: nil}
+  @invalid_attrs %{hash: nil, uri: nil}
 
   def fixture(:link) do
     {:ok, link} = Links.create_link(@create_attrs)
@@ -40,7 +40,7 @@ defmodule ShortenApiWeb.LinkControllerTest do
       assert %{
                "id" => id,
                "hash" => "some hash",
-               "url" => "some url"
+               "uri" => "http://example.com/foo?thing=bar"
              } = json_response(conn, 200)["data"]
     end
 
@@ -62,7 +62,7 @@ defmodule ShortenApiWeb.LinkControllerTest do
       assert %{
                "id" => id,
                "hash" => "some updated hash",
-               "url" => "some updated url"
+               "uri" => "some updated uri"
              } = json_response(conn, 200)["data"]
     end
 

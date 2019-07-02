@@ -4,7 +4,7 @@ defmodule ShortenApi.Links.Link do
 
   schema "links" do
     field :hash, :string
-    field :url, :string
+    field :uri, EctoURI
 
     timestamps()
   end
@@ -12,20 +12,9 @@ defmodule ShortenApi.Links.Link do
   @doc false
   def changeset(link, attrs) do
     link
-    |> cast(attrs, [:hash, :url])
-    |> generate_hash(attrs)
-    |> validate_required([:hash, :url])
+    |> cast(attrs, [:hash, :uri])
+    |> validate_required([:hash, :uri])
     |> unique_constraint(:hash)
-    |> unique_constraint(:url)
+    |> unique_constraint(:uri)
   end
-
-  defp generate_hash(%__MODULE__{} = link, %{"hash" => ""}), do: generate_hash(link, %{hash: nil})
-
-  defp generate_hash(%__MODULE__{id: id} = link, %{"hash" => nil}) do
-    hashids = Hashids.new(salt: "this is my salt")
-    new_id = Hashids.encode(hashids, [id])
-    Map.put(link, :hash, new_id)
-  end
-
-  defp generate_hash(%__MODULE__{} = link, %{"hash" => hash}), do: link
 end

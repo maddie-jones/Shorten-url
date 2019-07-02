@@ -6,9 +6,9 @@ defmodule ShortenApi.LinksTest do
   describe "links" do
     alias ShortenApi.Links.Link
 
-    @valid_attrs %{hash: "some hash", url: "some url"}
-    @update_attrs %{hash: "some updated hash", url: "some updated url"}
-    @invalid_attrs %{hash: nil, url: nil}
+    @valid_attrs %{hash: "some hash", uri: "http://example.com/foo?thing=bar"}
+    @update_attrs %{hash: "some updated hash", uri: "https://example.com"}
+    @invalid_attrs %{hash: nil, uri: nil}
 
     def link_fixture(attrs \\ %{}) do
       {:ok, link} =
@@ -32,7 +32,7 @@ defmodule ShortenApi.LinksTest do
     test "create_link/1 with valid data creates a link" do
       assert {:ok, %Link{} = link} = Links.create_link(@valid_attrs)
       assert link.hash == "some hash"
-      assert link.url == "some url"
+      assert URI.to_string(link.uri) == "http://example.com/foo?thing=bar"
     end
 
     test "create_link/1 with invalid data returns error changeset" do
@@ -43,7 +43,7 @@ defmodule ShortenApi.LinksTest do
       link = link_fixture()
       assert {:ok, %Link{} = link} = Links.update_link(link, @update_attrs)
       assert link.hash == "some updated hash"
-      assert link.url == "some updated url"
+      assert URI.to_string(link.uri) == "https://example.com"
     end
 
     test "update_link/2 with invalid data returns error changeset" do
