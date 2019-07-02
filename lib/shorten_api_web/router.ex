@@ -9,4 +9,8 @@ defmodule ShortenApiWeb.Router do
     pipe_through :api
     resources "/links", LinkController
   end
+
+  scope "/", ShortenApiWeb do
+    get "/short", ShortController, :reroute
+  end
 end
