@@ -5,7 +5,7 @@ defmodule ShortenApiWeb.ShortController do
 
   action_fallback ShortenApiWeb.FallbackController
 
-  def reroute(conn, _params) do
+  def reroute(conn, %{"x" => x}) do
     conn
     |> redirect(external: "http://example.com")
   end

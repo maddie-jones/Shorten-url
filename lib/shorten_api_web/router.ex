@@ -11,6 +11,6 @@ defmodule ShortenApiWeb.Router do
   end
 
   scope "/", ShortenApiWeb do
-    get "/short", ShortController, :reroute
+    get "/:x", ShortController, :reroute
   end
 end

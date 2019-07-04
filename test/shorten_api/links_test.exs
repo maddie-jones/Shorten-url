@@ -29,6 +29,13 @@ defmodule ShortenApi.LinksTest do
       assert Links.get_link!(link.id) == link
     end
 
+    test "get_link_by_hash!/1 returns the link with given hash" do
+      link = link_fixture()
+
+      assert get_in(Links.get_link_by_hash!(link.hash), [:uri]) ==
+               URI.to_string(link.uri)
+    end
+
     test "create_link/1 with valid data creates a link" do
       assert {:ok, %Link{} = link} = Links.create_link(@valid_attrs)
       assert link.hash == "some hash"
