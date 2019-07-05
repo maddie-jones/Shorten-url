@@ -31,9 +31,9 @@ defmodule ShortenApi.LinksTest do
 
     test "get_link_by_hash!/1 returns the link with given hash" do
       link = link_fixture()
+      assert %Link{uri: retrieved_uri} = Links.get_link_by_hash!(link.hash)
 
-      assert get_in(Links.get_link_by_hash!(link.hash), [:uri]) ==
-               URI.to_string(link.uri)
+      assert retrieved_uri == link.uri
     end
 
     test "create_link/1 with valid data creates a link" do

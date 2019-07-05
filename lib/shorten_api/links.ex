@@ -38,13 +38,7 @@ defmodule ShortenApi.Links do
   def get_link!(id), do: Repo.get!(Link, id)
 
   def get_link_by_hash!(hash) do
-    query =
-      from l in "links",
-        where: l.hash == ^hash,
-        select: %{uri: l.uri}
-
-    # repo.one using to string on uri struck
-    uri_struct = Repo.one(query)
+    Repo.get_by!(Link, hash: hash)
   end
 
   @doc """

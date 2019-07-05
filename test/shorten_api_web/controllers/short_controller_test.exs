@@ -2,17 +2,11 @@ defmodule ShortenApiWeb.ShortControllerTest do
   use ShortenApiWeb.ConnCase
 
   alias ShortenApi.Links
-  alias ShortenApi.Links.Link
 
   @create_attrs %{
     hash: "some hash",
     uri: "http://example.com/foo?thing=bar"
   }
-  @update_attrs %{
-    hash: "some updated hash",
-    uri: "some updated uri"
-  }
-  @invalid_attrs %{hash: nil, uri: nil}
 
   def fixture(:link) do
     {:ok, link} = Links.create_link(@create_attrs)
@@ -24,9 +18,12 @@ defmodule ShortenApiWeb.ShortControllerTest do
   end
 
   test "route redirected to other link", %{conn: conn} do
+    %_{uri: created_uri} = fixture(:link)
+    created_uri = URI.to_string(created_uri)
+
     conn = get(conn, Routes.short_path(conn, :reroute, "some hash"))
 
     assert 302 = conn.status
-    assert ["http://example.com/foo?thing=bar"] = Plug.Conn.get_resp_header(conn, "location")
+    assert [^created_uri] = Plug.Conn.get_resp_header(conn, "location")
   end
 end
