@@ -11,9 +11,10 @@ defmodule ShortenApi.Application do
       # Start the Ecto repository
       ShortenApi.Repo,
       # Start the endpoint when the application starts
-      ShortenApiWeb.Endpoint
+      ShortenApiWeb.Endpoint,
       # Starts a worker by calling: ShortenApi.Worker.start_link(arg)
       # {ShortenApi.Worker, arg},
+      {ShortenApi.Cache.Supervisor, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

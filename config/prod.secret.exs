@@ -5,20 +5,22 @@
 # file to your .gitignore.
 use Mix.Config
 
-database_url =
-  System.get_env("DATABASE_URL") ||
-    raise """
-    environment variable DATABASE_URL is missing.
-    For example: ecto://USER:PASS@HOST/DATABASE
-    """
+# database_url =
+#   System.get_env("DATABASE_URL") ||
+#     raise """
+#     environment variable DATABASE_URL is missing.
+#     For example: ecto://USER:PASS@HOST/DATABASE
+#     """
 
 config :shorten_api, ShortenApi.Repo,
   # ssl: true,
-  url: database_url,
+  # url: "ecto:///shorten_api_dev",
+  database: "shorten_api_dev",
+  hostname: "localhost",
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 secret_key_base =
-  System.get_env("SECRET_KEY_BASE") ||
+  "OvHSfhsHDQv6LdDyxx9ArTvCxB5C1zct1txooyhkuZV8oSYsR5fx0RjK9q8uXpbW" ||
     raise """
     environment variable SECRET_KEY_BASE is missing.
     You can generate one by calling: mix phx.gen.secret

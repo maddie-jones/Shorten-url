@@ -38,7 +38,7 @@ defmodule ShortenApi.Links do
   def get_link!(id), do: Repo.get!(Link, id)
 
   def get_link_by_hash!(hash) do
-    Repo.get_by!(Link, hash: hash)
+    ShortenApi.Cache.fetch(hash, fn -> Repo.get_by!(Link, hash: hash) end)
   end
 
   @doc """
